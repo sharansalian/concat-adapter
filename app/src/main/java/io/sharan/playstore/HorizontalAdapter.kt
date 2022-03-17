@@ -2,13 +2,12 @@ package io.sharan.playstore
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.sharan.playstore.databinding.ViewHorizontalBinding
 
-class HorizontalAdapter(val onClick: (String) -> Unit) :
-    RecyclerView.Adapter<HorizontalViewHolder>() {
-
-    private var data: List<String> = emptyList()
+class HorizontalAdapter(private val onClick: (String) -> Unit) :
+    ListAdapter<String, HorizontalViewHolder>(StringDiffCallback) {
 
     companion object {
         const val VIEW_TYPE = 444
@@ -21,15 +20,9 @@ class HorizontalAdapter(val onClick: (String) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: HorizontalViewHolder, position: Int) {
-        holder.bind(data[position], onClick)
+        holder.bind(getItem(position), onClick)
     }
 
-    override fun getItemCount(): Int = data.size
-
-    fun updateData(data: List<String>) {
-        this.data = data
-        notifyDataSetChanged()
-    }
 }
 
 class HorizontalViewHolder(
